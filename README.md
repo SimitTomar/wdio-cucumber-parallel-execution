@@ -15,10 +15,6 @@ Handles merging of reports out of the box and provides a consolidated JSON Repo
 npm install webdriverio-cucumber-parallel-execution
 ```
 
-# Architectural View
-
-
-
 
 # API
 

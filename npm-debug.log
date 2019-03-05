@@ -1,0 +1,125 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/simtomar/.nvm/versions/node/v6.14.4/bin/node',
+1 verbose cli   '/Users/simtomar/.nvm/versions/node/v6.14.4/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@3.10.10
+3 info using node@v6.14.4
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/simtomar/Desktop/webdriverio-cucumber-parallel-execution',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/simtomar/.npm/webdriverio-cucumber-parallel-execution/2.1.1/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/simtomar/.npm correctMkdir not in flight; initializing
+10 info lifecycle webdriverio-cucumber-parallel-execution@2.1.1~prepublish: webdriverio-cucumber-parallel-execution@2.1.1
+11 silly lifecycle webdriverio-cucumber-parallel-execution@2.1.1~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/Users/simtomar/.npm/webdriverio-cucumber-parallel-execution/2.1.1/package.tgz',
+12 verbose tar pack   '/Users/simtomar/Desktop/webdriverio-cucumber-parallel-execution' ]
+13 verbose tarball /Users/simtomar/.npm/webdriverio-cucumber-parallel-execution/2.1.1/package.tgz
+14 verbose folder /Users/simtomar/Desktop/webdriverio-cucumber-parallel-execution
+15 verbose addLocalTarball adding from inside cache /Users/simtomar/.npm/webdriverio-cucumber-parallel-execution/2.1.1/package.tgz
+16 verbose correctMkdir /Users/simtomar/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd webdriverio-cucumber-parallel-execution@2.1.1
+18 verbose afterAdd /Users/simtomar/.npm/webdriverio-cucumber-parallel-execution/2.1.1/package/package.json not in flight; writing
+19 verbose correctMkdir /Users/simtomar/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /Users/simtomar/.npm/webdriverio-cucumber-parallel-execution/2.1.1/package/package.json written
+21 silly publish { name: 'webdriverio-cucumber-parallel-execution',
+21 silly publish   version: '2.1.1',
+21 silly publish   description: 'WebdriverIO Package to execute  Cucumber scenarios in parallel',
+21 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+21 silly publish   keywords:
+21 silly publish    [ 'webdriverio',
+21 silly publish      'parallel',
+21 silly publish      'cucumber',
+21 silly publish      'speed',
+21 silly publish      'execution',
+21 silly publish      'feature',
+21 silly publish      'scenario' ],
+21 silly publish   author: { name: 'Simit Tomar' },
+21 silly publish   license: 'MIT',
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+https://github.com/SimitTomar/webdriverio-cucumber-parallel-execution.git' },
+21 silly publish   bugs: { url: 'https://github.com/SimitTomar/webdriverio-cucumber-parallel-execution/issues' },
+21 silly publish   dependencies:
+21 silly publish    { chalk: '2.4.2',
+21 silly publish      cucumber: '0.10.4',
+21 silly publish      'cucumber-html-reporter': '4.0.0',
+21 silly publish      'cucumber-tag-expressions': '1.1.1',
+21 silly publish      'fs-extra': '0.26.7',
+21 silly publish      gherkin: '5.1.0',
+21 silly publish      glob: '7.1.3',
+21 silly publish      lodash: '4.17.11',
+21 silly publish      uniqid: '5.0.3',
+21 silly publish      'node-dir': '0.1.17',
+21 silly publish      'run-sequence': '2.2.1',
+21 silly publish      yargs: '5.0.0' },
+21 silly publish   readme: '# webdriverio-cucumber-parallel-execution\n\nA WebdriverIO capability for running **Cucumber** scenarios in parallel.\n\nThe capability Segregates the entire Automation Suite into smallest independent chunks (Scenarios) and spawns numerous threads through WebdriverIOs maxInstances feature,thus reducing the Test Execution time drastically and allowing Teams to release much faster.\n\nThe Solution is Compatible with multiple versions of Nodejs (Ones supporting Async Await natively as well as ones which do not support it)\n\nHandles merging of reports out of the box and provides a consolidated JSON Report Array, which can be leveraged for Reporting.\n\n\n# Installation\n\n```\nnpm install webdriverio-cucumber-parallel-execution\n```\n\n\n# API\n\n\nThe Module contains the following functions:\n\n\n\n### performSetup\n\nThis Feature Creates/Removes the Spec and Temp Folders and puts every Scenario in a seperate Feature File\n\n\n| Parameter                        | Type   | Details                                                                         |\n|----------------------------------|--------|---------------------------------------------------------------------------------|\n| sourceSpecDirectory              | string | glob expression for sourceSpecDirectory                                         |\n| tmpSpecDirectory                 | string | Path to temp folder containing the Temporary Feature Files                      |\n| parallelExecutionReportDirectory | string | Path to Parallel Execution Report Directory where all the Reports will be saved |\n| tagExpression (optional)         | string | Tag expression to parse                                                         |\n| ff (optional)                    | string | Feature File Name to parse                                                      |\n| lang (optional)                  | string | Language of sourceSpecDirectory                                                 |\n\n\n\n\n### getConsolidatedArray\n\n\nThis Feature clubs the JSON Objects generated by every splitted Feature File and returns a consolidated JSON Array, which can be used for Reporting.\n\n| Parameter                       | Type   | Details                                                                         |\n|---------------------------------|--------|---------------------------------------------------------------------------------|\n| jsonTmpReportsDirectory         | string | Path of the Folder containg Temporary JSON files for each Splitted Feature File |\n\n\n\n\n# Usage\n\n### Setup\n\n```\n\nconst setup = require(\'webdriverio-cucumber-parallel-execution\').setup;\nconst parallelExecution = new setup;\n\nparallelExecution.performSetup({\n    sourceSpecDirectory: sourceSpecDirectory,\n    tmpSpecDirectory: tmpSpecDirectory,\n    parallelExecutionReportDirectory: parallelExecutionReportDirectory,\n    tagExpression: argv.tags,\n    ff: argv.ff,\n    lang: \'en\'\n});\n\n\n```\n\n### Get Consolidated JSON Report Array\n\n```\n\nconst jsonConsolidatedReport = require(\'webdriverio-cucumber-parallel-execution\').jsonConsolidatedData;\nconst jsonReport = new jsonConsolidatedReport;\n\nlet consolidatedJsonArray = jsonReport.getConsolidatedArray({\n    parallelExecutionReportDirectory: parallelExecutionReportDirectory\n});\n\n```\n\n\n# License\n\n(The MIT License)\n\nCopyright (c) 2019 Simit Tomar simittomar8@gmail.com\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\nCopyright (c) 2019 Alexander Galichenko\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: 'a4e56ca0ea527d47fcc9b9fb37fd2d7659980d89',
+21 silly publish   homepage: 'https://github.com/SimitTomar/webdriverio-cucumber-parallel-execution#readme',
+21 silly publish   _id: 'webdriverio-cucumber-parallel-execution@2.1.1',
+21 silly publish   _shasum: '7ae1f19b32651d37f991c289fe8bc62d9342eaea',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name webdriverio-cucumber-parallel-execution
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'webdriverio-cucumber-parallel-execution',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   escapedName: 'webdriverio-cucumber-parallel-execution',
+26 silly mapToRegistry   name: 'webdriverio-cucumber-parallel-execution',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri https://registry.npmjs.org/webdriverio-cucumber-parallel-execution
+28 verbose publish registryBase https://registry.npmjs.org/
+29 silly publish uploading /Users/simtomar/.npm/webdriverio-cucumber-parallel-execution/2.1.1/package.tgz
+30 verbose request uri https://registry.npmjs.org/webdriverio-cucumber-parallel-execution
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 6:17:55 PM
+33 verbose request using bearer token for auth
+34 verbose request id 586be0679d10e2b8
+35 http request PUT https://registry.npmjs.org/webdriverio-cucumber-parallel-execution
+36 http 403 https://registry.npmjs.org/webdriverio-cucumber-parallel-execution
+37 verbose headers { date: 'Tue, 05 Mar 2019 18:18:41 GMT',
+37 verbose headers   'content-type': 'application/json',
+37 verbose headers   'transfer-encoding': 'chunked',
+37 verbose headers   connection: 'keep-alive',
+37 verbose headers   'set-cookie': [ '__cfduid=d29595b6bf79f74faa93bc6d8f265908f1551809921; expires=Wed, 04-Mar-20 18:18:41 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+37 verbose headers   'cf-ray': '4b2e18065e4c35f0-LHR',
+37 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+37 verbose headers   vary: 'Accept-Encoding',
+37 verbose headers   server: 'cloudflare',
+37 verbose headers   'content-encoding': 'gzip' }
+38 verbose request invalidating /Users/simtomar/.npm/registry.npmjs.org/webdriverio-cucumber-parallel-execution on PUT
+39 error publish Failed PUT 403
+40 verbose stack Error: webdriverio-cucumber-parallel-execution cannot be republished until 24 hours have passed. : webdriverio-cucumber-parallel-execution
+40 verbose stack     at makeError (/Users/simtomar/.nvm/versions/node/v6.14.4/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+40 verbose stack     at CachingRegistryClient.<anonymous> (/Users/simtomar/.nvm/versions/node/v6.14.4/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+40 verbose stack     at /Users/simtomar/.nvm/versions/node/v6.14.4/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:216:7
+40 verbose stack     at Gunzip.onEnd (zlib.js:227:5)
+40 verbose stack     at emitNone (events.js:91:20)
+40 verbose stack     at Gunzip.emit (events.js:185:7)
+40 verbose stack     at endReadableNT (_stream_readable.js:978:12)
+40 verbose stack     at _combinedTickCallback (internal/process/next_tick.js:80:11)
+40 verbose stack     at process._tickCallback (internal/process/next_tick.js:104:9)
+41 verbose statusCode 403
+42 verbose pkgid webdriverio-cucumber-parallel-execution
+43 verbose cwd /Users/simtomar/Desktop/webdriverio-cucumber-parallel-execution
+44 error Darwin 17.7.0
+45 error argv "/Users/simtomar/.nvm/versions/node/v6.14.4/bin/node" "/Users/simtomar/.nvm/versions/node/v6.14.4/bin/npm" "publish"
+46 error node v6.14.4
+47 error npm  v3.10.10
+48 error code E403
+49 error webdriverio-cucumber-parallel-execution cannot be republished until 24 hours have passed. : webdriverio-cucumber-parallel-execution
+50 error If you need help, you may report this error at:
+50 error     <https://github.com/npm/npm/issues>
+51 verbose exit [ 1, true ]

@@ -1,7 +1,8 @@
 {
-  "name": "webdriverio-cucumber-parallel-execution",
-  "version": "2.1.1",
+  "name": "wdio-cucumber-parallel-execution",
+  "version": "2.1.2",
   "description": "WebdriverIO Package to execute  Cucumber scenarios in parallel",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,9 +19,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SimitTomar/webdriverio-cucumber-parallel-execution.git"
+    "url": "https://github.com/SimitTomar/wdio-cucumber-parallel-execution.git"
   },
-  "bugs": "https://github.com/SimitTomar/webdriverio-cucumber-parallel-execution/issues",
+  "bugs": "https://github.com/SimitTomar/wdio-cucumber-parallel-execution/issues",
   "dependencies": {
     "chalk": "2.4.2",
     "cucumber": "0.10.4",

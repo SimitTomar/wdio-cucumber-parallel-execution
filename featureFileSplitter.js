@@ -7,7 +7,7 @@ const _ = require("lodash");
 const chalk = require('chalk');
 
 
-let FeatureFileSplitter = function () {
+let featureFileSplitter = function () {
 
     /**
      * Compile and create splitted files
@@ -39,15 +39,15 @@ let FeatureFileSplitter = function () {
                 filePaths.push(featureFile);
             }
 
-            const featureTexts = this._readFiles(filePaths);
-            const asts = this._parseGherkinFiles(featureTexts, options.lang);
+            const featureTexts = this.readFiles(filePaths);
+            const asts = this.parseGherkinFiles(featureTexts, options.lang);
             var i = 1;
             var fileSequence = 0;
             var scenariosWithTagFound = false;
             asts.forEach(ast => {
-                const featureTemplate = this._getFeatureTemplate(ast);
-                const features = this._splitFeature(ast.feature.children, featureTemplate);
-                const filteredFeatures = this._filterFeaturesByTag(features, options.tagExpression);
+                const featureTemplate = this.getFeatureTemplate(ast);
+                const features = this.splitFeature(ast.feature.children, featureTemplate);
+                const filteredFeatures = this.filterFeaturesByTag(features, options.tagExpression);
                 if(filteredFeatures.length > 0){
                     scenariosWithTagFound = true;
                 }
@@ -57,7 +57,7 @@ let FeatureFileSplitter = function () {
                     parentFileName = parentFileName.replace(".feature", "_");
                     const fileName = parentFileName + i + '.feature';
                     i++;
-                    fs.writeFileSync(path.resolve(`${options.tmpSpecDirectory}/${fileName}`), this._writeFeature(splitFeature.feature), "utf8");
+                    fs.writeFileSync(path.resolve(`${options.tmpSpecDirectory}/${fileName}`), this.writeFeature(splitFeature.feature), "utf8");
                 })
                 fileSequence++;
             });
@@ -77,7 +77,7 @@ let FeatureFileSplitter = function () {
      * @param filePaths
      * @return {Array}
      */
-    this._readFiles = function (filePaths) {
+    this.readFiles = function (filePaths) {
         try {
             return filePaths.map(filePath => fs.readFileSync(filePath, "utf8"))
         } catch (e) {
@@ -92,7 +92,7 @@ let FeatureFileSplitter = function () {
      * @param lang - language to parse
      * @return {Array}
      */
-    this._parseGherkinFiles = function (features, lang) {
+    this.parseGherkinFiles = function (features, lang) {
         try {
             const parser = new Gherkin.Parser();
             const matcher = new Gherkin.TokenMatcher(lang);
@@ -112,7 +112,7 @@ let FeatureFileSplitter = function () {
      * @param feature
      * @return {*}
      */
-    this._getFeatureTemplate = function (feature) {
+    this.getFeatureTemplate = function (feature) {
         try {
             const featureTemplate = _.cloneDeep(feature);
             featureTemplate.feature.children = featureTemplate.feature.children.filter(scenario => scenario.type === "Background");
@@ -129,7 +129,7 @@ let FeatureFileSplitter = function () {
      * @return {Array} - list of features
      * @private
      */
-    this._splitFeature = function (scenarios, featureTemplate) {
+    this.splitFeature = function (scenarios, featureTemplate) {
 
         try {
             const scenarioOutline = scenarios
@@ -164,7 +164,7 @@ let FeatureFileSplitter = function () {
      * @return {string}
      * @private
      */
-    this._writeFeature = function (feature) {
+    this.writeFeature = function (feature) {
         try {
             const LINE_DELIMITER = "\n";
 
@@ -213,7 +213,7 @@ let FeatureFileSplitter = function () {
      * @return {Array}
      * @private
      */
-    this._filterFeaturesByTag = function (features, tagExpression) {
+    this.filterFeaturesByTag = function (features, tagExpression) {
         try {
             const expressionNode = parser.parse(tagExpression);
             return features.filter(feature => {
@@ -231,4 +231,4 @@ let FeatureFileSplitter = function () {
 }
 
 
-module.exports = FeatureFileSplitter;
+module.exports = featureFileSplitter;

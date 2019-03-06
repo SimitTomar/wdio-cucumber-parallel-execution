@@ -1,2 +1,7 @@
-module.exports = require('./jsonConsolidatedData');
-module.exports = require('./setup');
+const getConsolidatedData = require('./getConsolidatedData');
+const performSetup = require('./performSetup');
+
+module.exports = {
+    getConsolidatedData: getConsolidatedData,
+    performSetup: performSetup
+}

@@ -24,18 +24,21 @@ let getConsolidatedArray = function (options) {
 
             let filteredArray = [];
             jsonArray.forEach((item) => {
-                var existing = filteredArray.filter((element) => {
-                    return element.id == item.id;
-                });
-                if (existing.length) {
-                    var existingIndex = filteredArray.indexOf(existing[0]);
-                    filteredArray[existingIndex].elements = filteredArray[existingIndex].elements.concat(item.elements);
-                } else {
-                    filteredArray.push(item);
+                if (item.hasOwnProperty('elements')) {
+                    var existing = filteredArray.filter((element) => {
+                        return element.id == item.id;
+                    });
+                    if (existing.length) {
+                        var existingIndex = filteredArray.indexOf(existing[0]);
+                        filteredArray[existingIndex].elements = filteredArray[existingIndex].elements.concat(item.elements);
+                    } else {
+                        filteredArray.push(item);
+                    }
                 }
             })
 
             return filteredArray;
+            
         } else {
             console.log(chalk.bold.hex('#7D18FF')(`No JSON Files found in ${options.parallelExecutionReportDirectory}/jsonTmpReports`));
 

@@ -48,7 +48,7 @@ let featureFileSplitter = function () {
                 const featureTemplate = this.getFeatureTemplate(ast);
                 const features = this.splitFeature(ast.feature.children, featureTemplate);
                 const filteredFeatures = this.filterFeaturesByTag(features, options.tagExpression);
-                if(filteredFeatures.length > 0){
+                if (filteredFeatures.length > 0) {
                     scenariosWithTagFound = true;
                 }
                 filteredFeatures.forEach(splitFeature => {
@@ -62,7 +62,7 @@ let featureFileSplitter = function () {
                 fileSequence++;
             });
 
-            if (scenariosWithTagFound == false){
+            if (scenariosWithTagFound == false) {
                 console.log(chalk.bold.hex('#7D18FF')(`No Feature File found for tha Tag Expression: ${options.tagExpression}`));
             }
         } catch (e) {
@@ -187,7 +187,18 @@ let featureFileSplitter = function () {
                 featureString += `${scenario.keyword}: ${scenario.name}${LINE_DELIMITER}`;
 
                 scenario.steps.forEach(step => {
-                    featureString += `${step.keyword}${step.text}${LINE_DELIMITER}`;
+                    if (step.argument != undefined) {
+                        featureString += `${step.keyword}${step.text}${LINE_DELIMITER}`;
+                        step.argument.rows.forEach(row => {
+                            var cellData = '|'
+                            row.cells.forEach(cell => {
+                                cellData += cell.value + '|'
+                            })
+                            featureString += `${cellData}${LINE_DELIMITER}`;
+                        })
+                    } else {
+                        featureString += `${step.keyword}${step.text}${LINE_DELIMITER}`;
+                    }
                 });
 
                 if (scenario.examples) {

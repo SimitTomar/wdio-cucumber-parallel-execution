@@ -1,6 +1,6 @@
 {
   "name": "wdio-cucumber-parallel-execution",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "WebdriverIO Package to execute  Cucumber scenarios in parallel",
   "main": "index.js",
   "scripts": {

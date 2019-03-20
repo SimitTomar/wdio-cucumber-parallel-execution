@@ -1,8 +1,7 @@
-'use strict';
+const fs_extra = require('fs-extra');
+const featureFileSplitter = require('./featureFileSplitter');
+const tmpFeatureFiles = new featureFileSplitter;
 
-var fs_extra = require('fs-extra');
-var featureFileSplitter = require('./featureFileSplitter');
-var tmpFeatureFiles = new featureFileSplitter();
 
 /**
  * Compile and create splitted files
@@ -15,7 +14,7 @@ var tmpFeatureFiles = new featureFileSplitter();
  *
  * @return {Promise<void>}
  */
-var performSetup = function performSetup(options) {
+let performSetup = function (options) {
     try {
 
         //Remove Tmp Spec  Directory & Create One
@@ -23,8 +22,8 @@ var performSetup = function performSetup(options) {
         fs_extra.ensureDirSync(options.tmpSpecDirectory);
 
         //Remove JSON Tmp Report Directory & Create One
-        fs_extra.removeSync(options.parallelExecutionReportDirectory + '/jsonTmpReports');
-        fs_extra.ensureDirSync(options.parallelExecutionReportDirectory + '/jsonTmpReports');
+        fs_extra.removeSync(`${options.parallelExecutionReportDirectory}/jsonTmpReports`);
+        fs_extra.ensureDirSync(`${options.parallelExecutionReportDirectory}/jsonTmpReports`);
 
         //Compile and Create Split Feature Files
         tmpFeatureFiles.compile({
@@ -37,6 +36,6 @@ var performSetup = function performSetup(options) {
     } catch (e) {
         console.log('Error: ', e);
     }
-};
+}
 
 module.exports = performSetup;

@@ -45,6 +45,7 @@ let featureFileSplitter = function () {
             var fileSequence = 0;
             var scenariosWithTagFound = false;
             asts.forEach(ast => {
+                if(ast.feature!=undefined || ast.feature!=null){
                 const featureTemplate = this.getFeatureTemplate(ast);
                 const features = this.splitFeature(ast.feature.children, featureTemplate);
                 const filteredFeatures = this.filterFeaturesByTag(features, options.tagExpression);
@@ -60,7 +61,7 @@ let featureFileSplitter = function () {
                     fs.writeFileSync(path.resolve(`${options.tmpSpecDirectory}/${fileName}`), this.writeFeature(splitFeature.feature), "utf8");
                 })
                 fileSequence++;
-            });
+            }});
 
             if (scenariosWithTagFound == false) {
                 console.log(chalk.bold.hex('#7D18FF')(`No Feature File found for tha Tag Expression: ${options.tagExpression}`));
@@ -137,6 +138,10 @@ let featureFileSplitter = function () {
                 .map(scenario => {
                     if (scenario.type === "ScenarioOutline") {
                         const scenarioTemplate = _.cloneDeep(scenario);
+                        if(scenario.examples[0]==undefined || scenario.examples[0]==null ){
+                            console.log("Gherkin syntax error : Missing examples for Scenario Outline :",scenario.name);
+                            process.exit(0);
+                        }
                         return scenario.examples[0].tableBody.map(row => {
                             const modifiedScenario = _.cloneDeep(scenarioTemplate);
                             modifiedScenario.examples[0].tableBody = [row];

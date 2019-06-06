@@ -20,8 +20,9 @@ var performSetup = function performSetup(options) {
         if (options.cleanTmpSpecDirectory) {
             //Remove Tmp Spec Directory during setup & Create One
             fs_extra.removeSync(options.tmpSpecDirectory);
-            fs_extra.ensureDirSync(options.tmpSpecDirectory);
         }
+
+        fs_extra.ensureDirSync(options.tmpSpecDirectory);
 
         //Compile and Create Split Feature Files
         tmpFeatureFiles.compile({

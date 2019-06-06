@@ -10,15 +10,18 @@ const tmpFeatureFiles = new featureFileSplitter;
  * @param {string} [options.tagExpression] - Tag expression to parse
  * @param {string} [options.ff] - Feature File Name to parse
  * @param {string} [options.lang] - Language of sourceSpecDirectory
- *
+ * @param {Boolean} [options.cleanTmpSpecDirectory] - Boolean for cleaning the Temp Spec Directory 
  * @return {Promise<void>}
  */
 let performSetup = function (options) {
     try {
 
-        //Remove Tmp Spec Directory & Create One
-        fs_extra.removeSync(options.tmpSpecDirectory);
-        fs_extra.ensureDirSync(options.tmpSpecDirectory);
+        if(options.cleanTmpSpecDirectory){
+            //Remove Tmp Spec Directory during setup & Create One
+            fs_extra.removeSync(options.tmpSpecDirectory);
+            fs_extra.ensureDirSync(options.tmpSpecDirectory);
+        }
+
 
         //Compile and Create Split Feature Files
         tmpFeatureFiles.compile({

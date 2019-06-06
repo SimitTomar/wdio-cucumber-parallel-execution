@@ -49,21 +49,23 @@ var featureFileSplitter = function featureFileSplitter() {
             var fileSequence = 0;
             var scenariosWithTagFound = false;
             asts.forEach(function (ast) {
-                var featureTemplate = _this.getFeatureTemplate(ast);
-                var features = _this.splitFeature(ast.feature.children, featureTemplate);
-                var filteredFeatures = _this.filterFeaturesByTag(features, options.tagExpression);
-                if (filteredFeatures.length > 0) {
-                    scenariosWithTagFound = true;
+                if (ast.feature != undefined || ast.feature != null) {
+                    var featureTemplate = _this.getFeatureTemplate(ast);
+                    var features = _this.splitFeature(ast.feature.children, featureTemplate);
+                    var filteredFeatures = _this.filterFeaturesByTag(features, options.tagExpression);
+                    if (filteredFeatures.length > 0) {
+                        scenariosWithTagFound = true;
+                    }
+                    filteredFeatures.forEach(function (splitFeature) {
+                        var splitFilePath = filePaths[fileSequence].split("/");
+                        var parentFileName = splitFilePath[splitFilePath.length - 1];
+                        parentFileName = parentFileName.replace(".feature", "_");
+                        var fileName = parentFileName + i + '.feature';
+                        i++;
+                        fs.writeFileSync(path.resolve(options.tmpSpecDirectory + "/" + fileName), _this.writeFeature(splitFeature.feature), "utf8");
+                    });
+                    fileSequence++;
                 }
-                filteredFeatures.forEach(function (splitFeature) {
-                    var splitFilePath = filePaths[fileSequence].split("/");
-                    var parentFileName = splitFilePath[splitFilePath.length - 1];
-                    parentFileName = parentFileName.replace(".feature", "_");
-                    var fileName = parentFileName + i + '.feature';
-                    i++;
-                    fs.writeFileSync(path.resolve(options.tmpSpecDirectory + "/" + fileName), _this.writeFeature(splitFeature.feature), "utf8");
-                });
-                fileSequence++;
             });
 
             if (scenariosWithTagFound == false) {
@@ -144,6 +146,10 @@ var featureFileSplitter = function featureFileSplitter() {
             }).map(function (scenario) {
                 if (scenario.type === "ScenarioOutline") {
                     var scenarioTemplate = _.cloneDeep(scenario);
+                    if (scenario.examples[0] == undefined || scenario.examples[0] == null) {
+                        console.log("Gherkin syntax error : Missing examples for Scenario Outline :", scenario.name);
+                        process.exit(0);
+                    }
                     return scenario.examples[0].tableBody.map(function (row) {
                         var modifiedScenario = _.cloneDeep(scenarioTemplate);
                         modifiedScenario.examples[0].tableBody = [row];

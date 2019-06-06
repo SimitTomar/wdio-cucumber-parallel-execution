@@ -16,7 +16,7 @@ var getConsolidatedArray = function getConsolidatedArray(options) {
     try {
 
         var jsonArray = [];
-        var jsonReportPaths = dir.files(options.parallelExecutionReportDirectory + '/jsonTmpReports', { sync: true });
+        var jsonReportPaths = dir.files(options.parallelExecutionReportDirectory, { sync: true });
 
         if (jsonReportPaths != null) {
             var _iteratorNormalCompletion = true;
@@ -63,7 +63,7 @@ var getConsolidatedArray = function getConsolidatedArray(options) {
 
             return filteredArray;
         } else {
-            console.log(chalk.bold.hex('#7D18FF')('No JSON Files found in ' + options.parallelExecutionReportDirectory + '/jsonTmpReports'));
+            console.log(chalk.bold.hex('#7D18FF')('No JSON Files found in ' + options.parallelExecutionReportDirectory));
         }
     } catch (e) {
         console.log('Error: ', e);

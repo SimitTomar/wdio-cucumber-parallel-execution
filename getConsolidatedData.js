@@ -2,9 +2,9 @@
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var dir = require('node-dir');
 var fs = require('fs-extra');
 var chalk = require('chalk');
+var glob = require('glob');
 
 /**
  * Get Consolidated JSON Report Array
@@ -16,7 +16,7 @@ var getConsolidatedArray = function getConsolidatedArray(options) {
     try {
 
         var jsonArray = [];
-        var jsonReportPaths = dir.files(options.parallelExecutionReportDirectory, { sync: true });
+        var jsonReportPaths = glob.sync(options.parallelExecutionReportDirectory + '*.json', { sync: true });
 
         if (jsonReportPaths != null) {
             var _iteratorNormalCompletion = true;

@@ -13,7 +13,7 @@ let getConsolidatedArray = function (options) {
     try {
 
         let jsonArray = [];
-        let jsonReportPaths = dir.files(`${options.parallelExecutionReportDirectory}/jsonTmpReports`, { sync: true });
+        let jsonReportPaths = dir.files(options.parallelExecutionReportDirectory, { sync: true });
 
         if (jsonReportPaths != null) {
             for (let value of jsonReportPaths) {
@@ -40,7 +40,7 @@ let getConsolidatedArray = function (options) {
             return filteredArray;
             
         } else {
-            console.log(chalk.bold.hex('#7D18FF')(`No JSON Files found in ${options.parallelExecutionReportDirectory}/jsonTmpReports`));
+            console.log(chalk.bold.hex('#7D18FF')(`No JSON Files found in ${options.parallelExecutionReportDirectory}`));
 
         }
 

@@ -16,7 +16,7 @@ var getConsolidatedArray = function getConsolidatedArray(options) {
     try {
 
         var jsonArray = [];
-        var jsonReportPaths = glob.sync(options.parallelExecutionReportDirectory + '*.json', { sync: true });
+        var jsonReportPaths = glob.sync(options.parallelExecutionReportDirectory + '/*.json', { sync: true });
 
         if (jsonReportPaths != null) {
             var _iteratorNormalCompletion = true;

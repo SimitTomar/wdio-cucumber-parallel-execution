@@ -13,7 +13,7 @@ let getConsolidatedArray = function (options) {
     try {
 
         let jsonArray = [];
-        let jsonReportPaths = glob.sync(`${options.parallelExecutionReportDirectory}*.json`, { sync: true });
+        let jsonReportPaths = glob.sync(`${options.parallelExecutionReportDirectory}/*.json`, { sync: true });
 
         if (jsonReportPaths != null) {
             for (let value of jsonReportPaths) {

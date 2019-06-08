@@ -19,6 +19,7 @@ npm install wdio-cucumber-parallel-execution
 
 ![ParallelExecution](parallelExecution.png)
 
+Assuming 1 Scenario takes 1 minute on Average, Total Execution Time will be 1 minute for 9 Scenarios since  all 9 Scenarios will get executed in parallel
 
 # API
 
@@ -36,10 +37,10 @@ This Feature Creates/Removes the Spec and Temp Folders and puts every Scenario i
 |----------------------------------|--------|-------------------------------------------------------------------------------------------------|
 | sourceSpecDirectory              | string | glob expression for sourceSpecDirectory                                                         |
 | tmpSpecDirectory                 | string | Path to temp folder containing the Temporary Feature Files (Gets removed in the next execution) |
-| parallelExecutionReportDirectory | string | Path to Parallel Execution Report Directory where all the Reports will be saved                 |
 | tagExpression (optional)         | string | Tag expression to parse                                                                         |
 | ff (optional)                    | string | Feature File Name to parse                                                                      |
 | lang (optional)                  | string | Language of sourceSpecDirectory                                                                 |
+| cleanTmpSpecDirectory            | Boolean| Boolean for cleaning the Temp Spec Directory                                                    |
 
 
 
@@ -67,10 +68,10 @@ const wdioParallel = require('wdio-cucumber-parallel-execution');
 wdioParallel.performSetup({
     sourceSpecDirectory: sourceSpecDirectory,
     tmpSpecDirectory: tmpSpecDirectory,
-    parallelExecutionReportDirectory: parallelExecutionReportDirectory,
     tagExpression: argv.tags,
     ff: argv.ff,
-    lang: 'en'
+    lang: 'en',
+    cleanTmpSpecDirectory: true
 });
 
 

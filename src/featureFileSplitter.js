@@ -35,7 +35,7 @@ let featureFileSplitter = function () {
             if (options.ff == undefined) {
                 filePaths = glob.sync(`${options.sourceSpecDirectory}/*.feature`);
             } else {
-                const featureFile = `${options.sourceSpecDirectory}/${options.ff}.feature`
+                const featureFile = `${options.sourceSpecDirectory}/${options.ff}.feature`;
                 filePaths.push(featureFile);
             }
 
@@ -59,7 +59,7 @@ let featureFileSplitter = function () {
                     const fileName = parentFileName + i + '.feature';
                     i++;
                     fs.writeFileSync(path.resolve(`${options.tmpSpecDirectory}/${fileName}`), this.writeFeature(splitFeature.feature), "utf8");
-                })
+                });
                 fileSequence++;
             }});
 
@@ -180,7 +180,6 @@ let featureFileSplitter = function () {
                     featureString += `${tag.name}${LINE_DELIMITER}`
                 });
             }
-
             featureString += `${feature.type}: ${feature.name}${LINE_DELIMITER}`;
 
             feature.children.forEach(scenario => {
@@ -190,17 +189,21 @@ let featureFileSplitter = function () {
                     });
                 }
                 featureString += `${scenario.keyword}: ${scenario.name}${LINE_DELIMITER}`;
-
                 scenario.steps.forEach(step => {
                     if (step.argument != undefined) {
                         featureString += `${step.keyword}${step.text}${LINE_DELIMITER}`;
-                        step.argument.rows.forEach(row => {
-                            var cellData = '|'
-                            row.cells.forEach(cell => {
-                                cellData += cell.value + '|'
-                            })
-                            featureString += `${cellData}${LINE_DELIMITER}`;
-                        })
+                        if (step.argument.type==='DataTable'){
+                            step.argument.rows.forEach(row => {
+                                var cellData = '|';
+                                row.cells.forEach(cell => {
+                                    cellData += cell.value + '|'
+                                });
+                                featureString += `${cellData}${LINE_DELIMITER}`;
+                            })}
+                        if (step.argument.type==='DocString'){
+                            featureString +=  "\"\"\"" + `${LINE_DELIMITER}` + step.argument.content + `${LINE_DELIMITER}` + "\"\"\"" + `${LINE_DELIMITER}`;
+
+                        }
                     } else {
                         featureString += `${step.keyword}${step.text}${LINE_DELIMITER}`;
                     }

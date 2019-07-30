@@ -1,7 +1,7 @@
 {
   "name": "wdio-cucumber-parallel-execution",
-  "version": "3.6.4",
-  "description": "WebdriverIO Package to execute Cucumber scenarios in parallel",
+  "version": "3.6.6",
+  "description": "WebdriverIO Package to execute  Cucumber scenarios in parallel",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

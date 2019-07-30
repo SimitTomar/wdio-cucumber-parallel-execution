@@ -187,7 +187,6 @@ var featureFileSplitter = function featureFileSplitter() {
                     featureString += "" + tag.name + LINE_DELIMITER;
                 });
             }
-
             featureString += feature.type + ": " + feature.name + LINE_DELIMITER;
 
             feature.children.forEach(function (scenario) {
@@ -197,17 +196,21 @@ var featureFileSplitter = function featureFileSplitter() {
                     });
                 }
                 featureString += scenario.keyword + ": " + scenario.name + LINE_DELIMITER;
-
                 scenario.steps.forEach(function (step) {
                     if (step.argument != undefined) {
                         featureString += "" + step.keyword + step.text + LINE_DELIMITER;
-                        step.argument.rows.forEach(function (row) {
-                            var cellData = '|';
-                            row.cells.forEach(function (cell) {
-                                cellData += cell.value + '|';
+                        if (step.argument.type === 'DataTable') {
+                            step.argument.rows.forEach(function (row) {
+                                var cellData = '|';
+                                row.cells.forEach(function (cell) {
+                                    cellData += cell.value + '|';
+                                });
+                                featureString += "" + cellData + LINE_DELIMITER;
                             });
-                            featureString += "" + cellData + LINE_DELIMITER;
-                        });
+                        }
+                        if (step.argument.type === 'DocString') {
+                            featureString += "\"\"\"" + ("" + LINE_DELIMITER) + step.argument.content + ("" + LINE_DELIMITER) + "\"\"\"" + ("" + LINE_DELIMITER);
+                        }
                     } else {
                         featureString += "" + step.keyword + step.text + LINE_DELIMITER;
                     }

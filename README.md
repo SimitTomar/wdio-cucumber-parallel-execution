@@ -1,6 +1,6 @@
 # wdio-cucumber-parallel-execution
 
-A WebdriverIO capability for running **Cucumber** scenarios in parallel.
+A WebdriverIO capability for running **Cucumber** scenarios within **Single/Multiple** Featurel Files in parallel.
 
 The capability Segregates the entire Automation Suite into smallest independent chunks (Scenarios) and spawns numerous threads through WebdriverIOs maxInstances feature,thus reducing the Test Execution time drastically and allowing Teams to release much faster.
 

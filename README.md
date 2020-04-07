@@ -12,7 +12,7 @@ Handles merging of reports out of the box and provides a consolidated JSON Repo
 # Installation
 
 ```
-npm install wdio-cucumber-parallel-execution
+npm install wdio-cucumber-parallel-execution --save-dev
 ```
 
 # Architectural View

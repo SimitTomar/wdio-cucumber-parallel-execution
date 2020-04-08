@@ -3,6 +3,8 @@
 var fs_extra = require('fs-extra');
 var featureFileSplitter = require('./featureFileSplitter');
 var tmpFeatureFiles = new featureFileSplitter();
+var emoji = require('node-emoji');
+var chalk = require('chalk');
 
 /**
  * Compile and create splitted files
@@ -16,6 +18,8 @@ var tmpFeatureFiles = new featureFileSplitter();
  */
 var performSetup = function performSetup(options) {
     try {
+
+        chalk.green.bold(emoji.emojify(':rocket:') + ' wdio-cucumber-parallel-execution triggered ') + emoji.emojify(':thumbsup:')
 
         if (options.cleanTmpSpecDirectory) {
             //Remove Tmp Spec Directory during setup & Create One

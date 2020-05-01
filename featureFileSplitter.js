@@ -37,7 +37,7 @@ var featureFileSplitter = function featureFileSplitter() {
 
             var filePaths = [];
             if (options.ff == undefined) {
-                filePaths = glob.sync(options.sourceSpecDirectory + "/*.feature");
+                filePaths = glob.sync(options.sourceSpecDirectory + "/**/*.feature");
             } else {
                 var featureFile = options.sourceSpecDirectory + "/" + options.ff + ".feature";
                 filePaths.push(featureFile);

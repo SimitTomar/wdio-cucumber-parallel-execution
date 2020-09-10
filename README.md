@@ -8,6 +8,8 @@ The Solution is Compatible with multiple versions of Nodejs (Ones supporting A
 
 Handles merging of reports out of the box and provides a consolidated JSON Report Array, which can be leveraged for Reporting.
 
+Star the repo in case you find it useful :)
+
 
 # Installation
 

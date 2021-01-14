@@ -98,6 +98,7 @@ if (argv.parallel === 'true') {
 wdio.conf.js
 
 ```
+var fs = require("fs-extra");
 exports.config = {
     // Runner Configuration
 
@@ -108,7 +109,7 @@ exports.config = {
      */
     onPrepare: () => {
         // Remove the `tmp/` folder that holds the json report files
-        removeSync(parallelExecutionReportDirectory);
+        fs.removeSync(parallelExecutionReportDirectory);
     },
 
     /**
@@ -126,7 +127,7 @@ exports.config = {
                 parallelExecutionReportDirectory: parallelExecutionReportDirectory
             });
 
-            let jsonFile = `${parallelExecutionReportDirectory}report.json`;
+            let jsonFile = `${parallelExecutionReportDirectory}/report.json`;
             fs.writeFileSync(jsonFile, JSON.stringify(consolidatedJsonArray));
     
             // The below code is not part of wdio-cucumber-parallel-execution module

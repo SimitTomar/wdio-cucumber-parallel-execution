@@ -77,20 +77,40 @@ const currentTime = new Date().toJSON().replace(/:/g, "-");
 const sourceSpecDirectory = `path/to/featureFilesDirectory`;
 const parallelExecutionReportDirectory = `path/to/parallelExecutionReportDirectory`;
 
-let featureFilePath = `${sourceSpecDirectory}/*.feature`;
+...
 
-// If parallel execution is set to true, then create the Split the feature files
-// And store then in a tmp spec directory (created inside `the source spec directory)
-if (argv.parallel === 'true') {
-    tmpSpecDirectory = `${sourceSpecDirectory}/tmp`;
-    wdioParallel.performSetup({
-        sourceSpecDirectory: sourceSpecDirectory,
-        tmpSpecDirectory: tmpSpecDirectory,
-        cleanTmpSpecDirectory: true
-    });
-    featureFilePath = `${tmpSpecDirectory}/*.feature`
-}
+exports.config = {
+    // Runner Configuration
 
+    ...
+
+    specs: [sourceSpecDirectory],
+
+    ...
+
+    /**
+    * Gets executed once before all workers get launched.
+    * @param {Object} config wdio configuration object
+    * @param {Array.<Object>} capabilities list of capabilities details
+    */
+    onPrepare: (config, capabilities) => {
+        // If parallel execution is set to true, then create the Split the feature files
+        // And store then in a tmp spec directory (created inside `the source spec directory)
+        tmpSpecDirectory = `${sourceSpecDirectory}/tmp`;
+            if (argv.parallel === 'true') {
+                wdioParallel.performSetup({
+                    sourceSpecDirectory: sorceSpecDirectory,
+                    tmpSpecDirectory: tmpSpecDirectory,
+                    cleanTmpSpecDirectory: true
+                });
+                config.specs = `${tmpSpecDirectory}/**`;
+            } else {
+                fsExtra.removeSync(tmpSpecDirectory);
+            }
+
+    ...
+
+    }
 ```
 
 ### Get Consolidated JSON Report Array
@@ -107,8 +127,14 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      */
     onPrepare: () => {
+
+        ...
+
         // Remove the `tmp/` folder that holds the json report files
         removeSync(parallelExecutionReportDirectory);
+        
+        ...
+
     },
 
     /**
